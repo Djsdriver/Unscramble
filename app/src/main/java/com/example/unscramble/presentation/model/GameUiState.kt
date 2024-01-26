@@ -1,4 +1,4 @@
-package com.example.unscramble
+package com.example.unscramble.presentation.model
 
 data class GameUiState(
     val currentScrambledWord: String = "",

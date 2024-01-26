@@ -1,4 +1,4 @@
-package com.example.unscramble
+package com.example.unscramble.presentation.ui.screens
 
 import android.app.Activity
 import androidx.compose.foundation.background
@@ -39,6 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.unscramble.presentation.viewmodel.GameViewModel
+import com.example.unscramble.R
 
 @Preview(showBackground = true)
 @Composable

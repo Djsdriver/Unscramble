@@ -1,15 +1,25 @@
-package com.example.unscramble
+package com.example.unscramble.presentation.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.unscramble.presentation.model.GameUiState
+import com.example.unscramble.data.MAX_NO_OF_WORDS
+import com.example.unscramble.data.SCORE_INCREASE
+import com.example.unscramble.data.allWords
+import com.example.unscramble.domain.usecase.PickRandomWordAndShuffleUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class GameViewModel : ViewModel() {
+@HiltViewModel
+class GameViewModel @Inject constructor(
+    private val pickRandomWordAndShuffleUseCase: PickRandomWordAndShuffleUseCase
+) : ViewModel() {
     private lateinit var currentWord: String
     private var usedWords: MutableSet<String> = mutableSetOf()
 
@@ -35,7 +45,7 @@ class GameViewModel : ViewModel() {
         resetGame()
     }
 
-    private fun pickRandomWordAndShuffle(): String {
+    /*private fun pickRandomWordAndShuffle(): String {
         // Continue picking up a new random word until you get one that hasn't been used before
         currentWord = allWords.random()
         if (usedWords.contains(currentWord)) {
@@ -54,7 +64,12 @@ class GameViewModel : ViewModel() {
             tempWord.shuffle()
         }
         return String(tempWord)
+    }*/
+    private fun pickRandomWordAndShuffle(): String{
+        currentWord= allWords.random()
+        return pickRandomWordAndShuffleUseCase.pickRandomWordAndShuffle(usedWords,currentWord)
     }
+
 
     fun checkUserGuess() {
         if (userGuess.equals(currentWord, ignoreCase = true)) {
